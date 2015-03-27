@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map_canvas { width:100%; height: 100% }
+      .myControls { 
+        background-color: #fff;
+        border: 2px solid #fff;
+        border-radius: 3px;
+        box-shadow: 0 2px 6px rgba(0,0,0,.3);
+        cursor: pointer;
+        float: left;
+        margin-left: 10px;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .controlsText{
+        color: rgb(25,25,25);
+        font-family: Roboto,Arial,sans-serif;
+        font-size: 16px;
+        line-height: 38px;
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+    </style>
+    <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?signed_in=true">
+    </script>
+    <script type="text/javascript">
+      var map;
+      var initZoom = 8;
+      var posArray = [
+        {"country": "World", "lat":34.597042, "lng":-8.613281, "zoomLevel":3},
+        {"country": "Taiwan", "lat":23.94, "lng":121.04, "zoomLevel":8},
+        {"country": "US", "lat":41.508577, "lng":-98.173828, "zoomLevel":5},
+        {"country": "Canada", "lat":57.160078, "lng":-97.514648, "zoomLevel":5},
+        {"country": "Australia", "lat":-22.065278, "lng":133.901367, "zoomLevel":5},
+        {"country": "China", "lat":35.583849, "lng":107.402344, "zoomLevel":5}
+      ]
+      var initZoom = posArray[1].zoomLevel;
+      var initLatLon = new google.maps.LatLng(posArray[1].lat, posArray[1].lng);
+
+      function CenterControl(controlDiv, map) {
+        var controlUI=[];
+        var controlText=[];
+
+        for (i = 0; i < posArray.length; i++) {
+          controlUI[i] = document.createElement('div');
+          controlUI[i].setAttribute("class", "myControls");
+          controlUI[i].title = 'Click to pan to ' + posArray[i].country;
+          controlDiv.appendChild(controlUI[i]);
+
+          controlText[i] = document.createElement('div');
+          controlText[i].setAttribute("class", "controlsText");
+          controlText[i].innerHTML = posArray[i].country;
+          controlUI[i].appendChild(controlText[i]);
+        }
+
+      }
+
+      function initialize() {
+        var mapDiv = document.getElementById("map_canvas");        
+        var mapOptions = {
+          center: initLatLon,
+          zoom: initZoom,
+          mapTypeControl: false     
+        }
+        map = new google.maps.Map(mapDiv, mapOptions);
+        var centerControlDiv = document.createElement('div');
+        var centerControl = new CenterControl(centerControlDiv, map);
+
+        centerControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(centerControlDiv);
+      }
+
+      google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+  </head>
+  <body>
+    <div id="map_canvas"></div>
+  </body>
+</html>
