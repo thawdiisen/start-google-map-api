@@ -33,15 +33,15 @@
       var map;
       var initZoom = 8;
       var posArray = [
+        {"country": "Taiwan", "lat":23.690576, "lng":120.992432, "zoomLevel":8},      
         {"country": "World", "lat":34.597042, "lng":-8.613281, "zoomLevel":3},
-        {"country": "Taiwan", "lat":23.94, "lng":121.04, "zoomLevel":8},
-        {"country": "US", "lat":41.508577, "lng":-98.173828, "zoomLevel":5},
-        {"country": "Canada", "lat":57.160078, "lng":-97.514648, "zoomLevel":5},
-        {"country": "Australia", "lat":-22.065278, "lng":133.901367, "zoomLevel":5},
-        {"country": "China", "lat":35.583849, "lng":107.402344, "zoomLevel":5}
+        {"country": "US", "lat":40.313043, "lng":-97.294922, "zoomLevel":5},
+        {"country": "Canada", "lat":54.876607, "lng":-98.041992, "zoomLevel":5},
+        {"country": "Australia", "lat":-26.431228, "lng":133.198242, "zoomLevel":5},
+        {"country": "China", "lat":33.72434, "lng":102.612305, "zoomLevel":5}
       ]
-      var initZoom = posArray[1].zoomLevel;
-      var initLatLon = new google.maps.LatLng(posArray[1].lat, posArray[1].lng);
+      var zoomTaiwan = posArray[0].zoomLevel;
+      var taiwan = new google.maps.LatLng(posArray[0].lat, posArray[0].lng);
 
       function CenterControl(controlDiv, map) {
         var controlUI=[];
@@ -59,13 +59,53 @@
           controlUI[i].appendChild(controlText[i]);
         }
 
+        google.maps.event.addDomListener(controlUI[0], 'click', function() {
+          map.panTo(taiwan);
+          map.setZoom(zoomTaiwan)
+        });
+
+        var world = new google.maps.LatLng(posArray[1].lat, posArray[1].lng);
+        var zoomWorld = posArray[1].zoomLevel;
+        google.maps.event.addDomListener(controlUI[1], 'click', function() {
+          map.panTo(world);
+          map.setZoom(zoomWorld)
+        });
+
+        var us = new google.maps.LatLng(posArray[2].lat, posArray[2].lng);
+        var zoomUS = posArray[2].zoomLevel;
+        google.maps.event.addDomListener(controlUI[2], 'click', function() {
+          map.panTo(us);
+          map.setZoom(zoomUS)
+        });
+
+        var canada = new google.maps.LatLng(posArray[3].lat, posArray[3].lng);
+        var zoomCanada = posArray[3].zoomLevel;
+        google.maps.event.addDomListener(controlUI[3], 'click', function() {
+          map.panTo(canada);
+          map.setZoom(zoomCanada)
+        });
+
+        var australia = new google.maps.LatLng(posArray[4].lat, posArray[4].lng);
+        var zoomAustralia = posArray[4].zoomLevel;
+        google.maps.event.addDomListener(controlUI[4], 'click', function() {
+          map.panTo(australia);
+          map.setZoom(zoomAustralia)
+        });
+
+        var china = new google.maps.LatLng(posArray[5].lat, posArray[5].lng);
+        var zoomChina = posArray[5].zoomLevel;
+        google.maps.event.addDomListener(controlUI[5], 'click', function() {
+          map.panTo(china);
+          map.setZoom(zoomChina)
+        });
+           
       }
 
       function initialize() {
         var mapDiv = document.getElementById("map_canvas");        
         var mapOptions = {
-          center: initLatLon,
-          zoom: initZoom,
+          center: taiwan,
+          zoom: zoomTaiwan,
           mapTypeControl: false     
         }
         map = new google.maps.Map(mapDiv, mapOptions);
